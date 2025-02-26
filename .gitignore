@@ -89,7 +89,7 @@ docker/dev-db/postgres/2.\ Init\ Database
 /coverage
 
 # production
-/build
+/frontend/build
 
 # misc
 .DS_Store

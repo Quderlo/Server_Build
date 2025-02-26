@@ -1,0 +1,37 @@
+services:
+  postgres:
+    image: postgres:16
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: "django-db"
+      POSTGRES_USER: "user"
+      POSTGRES_PASSWORD: "user-password"
+    volumes:
+      - data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+  nginx:
+    build:
+      context: frontend
+      dockerfile: Dockerfile
+    volumes:
+      - static_volume:/usr/src/app/static  # <-- bind the static volume
+      - media_volume:/usr/src/app/media  # <-- bind the media volume
+#    depends_on:
+#      - django
+    networks:
+      - nginx_network
+    ports:
+      - 80:80
+
+
+volumes:
+  data:
+  static_volume:
+  media_volume:
+
+networks:
+  nginx_network:
+    driver: bridge
+
